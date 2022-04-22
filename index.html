@@ -32,8 +32,6 @@
     [...document.querySelectorAll("[data-user]")].forEach((e) => {
       new QRCode(e, `${e.dataset.user.trim()} ${e.dataset.pw.trim()}`);
     })
-    // new QRCode(document.getElementById("qrcode"), "http://jindo.dev.naver.com/collie");
-
   });
 
 </script>
