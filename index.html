@@ -1,0 +1,42 @@
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js" integrity="sha512-SGWgwwRA8xZgEoKiex3UubkSkV1zSE1BS6O4pXcaxcNtUlQsOmOmhVnDwIvqGRfEmuz83tIGL13cXMZn6upPyg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+
+<h1>Buldk</h1>
+<input type="file" id="file-selector">
+<div id="target" style='font-size: 32px; margin-right: 20px'>
+
+</div>
+<script>
+  const fileSelector = document.getElementById('file-selector');
+
+  const readImage = async (file) => new Promise(resolve => {
+    const reader = new FileReader();
+    reader.addEventListener('load', (event) => resolve(event.target.result));
+    reader.readAsText(file);
+  });
+  fileSelector.addEventListener('change', async (event) => {
+    const csv = await readImage(event.target.files[0]);
+    const html = Papa.parse(csv).data.map((e) => `
+      <div style="margin-top: 200px">
+        <div>username: ${e[0]}</div>
+        <div>password: ${e[1]}</div>
+        <div data-user="${e[0]}" data-pw="${e[1]}" style='margin-top: 20px'></div>
+      </div>
+    `).join('\n');
+    document.querySelector('#target').innerHTML = html;
+
+    [...document.querySelectorAll("[data-user]")].forEach((e) => {
+      new QRCode(e, `${e.dataset.user.trim()} ${e.dataset.pw.trim()}`);
+    })
+    // new QRCode(document.getElementById("qrcode"), "http://jindo.dev.naver.com/collie");
+
+  });
+
+</script>
+
+</body>
+</html>
