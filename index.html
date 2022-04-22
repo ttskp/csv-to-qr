@@ -5,9 +5,9 @@
 </head>
 <body>
 
-<h1>Buldk</h1>
+<h1>Hi, there</h1>
 <input type="file" id="file-selector">
-<div id="target" style='font-size: 32px; margin-right: 20px'>
+<div id="target" style='font-size: 32px; margin-left: 50px'>
 
 </div>
 <script>
@@ -32,6 +32,8 @@
     [...document.querySelectorAll("[data-user]")].forEach((e) => {
       new QRCode(e, `${e.dataset.user.trim()} ${e.dataset.pw.trim()}`);
     })
+    // new QRCode(document.getElementById("qrcode"), "http://jindo.dev.naver.com/collie");
+
   });
 
 </script>
